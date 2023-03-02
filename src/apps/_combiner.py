@@ -7,7 +7,24 @@ __all__ = ["Combiner"]
 
 
 class Combiner:
+    """
+    Combiner class is used to combine datacards into events
+    """
     def __init__(self, file, subtypes: dict):
+        """
+        Initialise combiner with file and subtypes
+
+        Args:
+            file (File): File object
+            subtypes (dict): Dictionary of event types and subtype files
+
+        Attributes:
+            __filtered_datacards (deque[DataCard]): Filtered datacards from file
+                by date and time with invalid datacards removed
+            __events (list[Event]): List of events combined from datacards
+            __type_adapter (EventTypeAdapter): Adapter for event types and
+                subtypes from subtype files to check if event is required
+        """
         self.__filtered_datacards: deque[DataCard] | None = None
         self.__events: list[Event] = []
         self.__type_adapter = EventTypeAdapter(subtypes)
@@ -22,6 +39,9 @@ class Combiner:
         self.__start_processing()
 
     def __start_processing(self):
+        """
+        Start processing datacards to combine them into events
+        """
         while len(self.__filtered_datacards) > 0:
             datacard = self.__filtered_datacards.popleft()
             if not self.__type_adapter.in_trigger_types(datacard.event):
@@ -36,9 +56,18 @@ class Combiner:
 
     @property
     def events(self):
+        """
+        Get list of events
+        """
         return self.__events
 
     def __filter_datacards(self, data_cards):
+        """
+        Filter datacards by date and time with invalid datacards removed
+
+        Args:
+            data_cards (list[DataCard]): List of datacards to filter
+        """
         filtered_datacards = list(
             filter(
                 lambda datacard: datacard.is_date_valid(),
@@ -50,13 +79,43 @@ class Combiner:
 
     @staticmethod
     def __sort_datacards_by_date(filtered_datacards):
+        """
+        Sort datacards by date
+
+        Args:
+            filtered_datacards (list[DataCard]): List of datacards to sort
+
+        Returns:
+            list[DataCard]: Sorted list of datacards
+
+        Raises:
+            AssertionError: If any datacard is invalid
+        """
         assert all(datacard.is_date_valid() for datacard in filtered_datacards)
         return sorted(filtered_datacards,
                       key=lambda datacard: datacard.get_date())
 
 
 class EventTypeAdapter:
+    """
+    Adapter for event types and subtypes from subtype files to check if event
+    is required
+    """
     def __init__(self, subtypes: dict):
+        """
+        Initialise adapter with subtypes
+
+        Args:
+            subtypes (dict): Dictionary of event types and subtype files
+
+        --------------------
+
+        Required Attributes:
+            LANDSLIDES (list[str]): List of landslide subtypes
+            FLOODS (list[str]): List of flood subtypes
+            EARTHQUAKES (list[str]): List of earthquake subtypes
+            STORMS (list[str]): List of storm subtypes
+        """
         for event, subtype_file in subtypes.items():
             contents = list(
                 map(
@@ -67,6 +126,20 @@ class EventTypeAdapter:
             self.__setattr__(event, contents)
 
     def in_required_types(self, item):
+        """
+        Check if event is required
+
+        Args:
+            item (str): Event type to check
+
+        Returns:
+            bool: True if event is required, False otherwise
+
+        --------------------
+
+        Required Types:
+            LANDSLIDES, FLOODS, EARTHQUAKES, STORMS
+        """
         return (
             any(
                 item.upper() in subtypes
@@ -77,6 +150,20 @@ class EventTypeAdapter:
         )
 
     def in_trigger_types(self, item):
+        """
+        Check if event is trigger type
+
+        Args:
+            item (str): Event type to check
+
+        Returns:
+            bool: True if event is trigger type, False otherwise
+
+        --------------------
+
+        Trigger Types:
+            FLOODS, EARTHQUAKES, STORMS
+        """
         return (
             any(
                 item.upper() in subtypes
@@ -88,6 +175,26 @@ class EventTypeAdapter:
         )
 
     def root_type(self, item):
+        """
+        Get root type of event
+
+        Args:
+            item (str): Event type to check
+
+        Returns:
+            str: Root type of event
+
+        Example:
+            >>> subtypes = {
+            ...     "LANDSLIDES": ["LANDSLIDE", "LANDSLIDES, ROCKSLIDE"],
+            ...     "FLOODS": ["FLASH FLOOD", "FLOOD, flashflood"],
+            ...     "EARTHQUAKES": ["EARTHQUAKE"],
+            ...     "STORMS": ["TORNADO", "STORM"],
+            ... }
+            >>> type_adapter = EventTypeAdapter(subtypes)
+            >>> type_adapter.root_type("Flash Flood")
+            FLOODS
+        """
         return (
             next(
                 (
@@ -103,8 +210,28 @@ class EventTypeAdapter:
 
 
 class EventSplitter:
+    """
+    Split datacards into different events
+    """
     def __init__(self, trigger: DataCard, rest_datacards: deque[DataCard],
                  type_adapter: EventTypeAdapter):
+        """
+        Initialise splitter with trigger datacard and rest of datacards
+
+        Args:
+            trigger (DataCard): Trigger datacard
+            rest_datacards (deque[DataCard]): Rest of datacards
+            type_adapter (EventTypeAdapter): Adapter for event types and
+                subtypes from subtype files to check if event is required
+
+        Attributes:
+            type_adapter (EventTypeAdapter): Adapter for event types and
+                subtypes from subtype files to check if event is required
+            event_type (str): Event type of trigger datacard
+            builder (EventBuilder): Event builder
+            event (Event | None): Event to be returned
+            rest_datacards (deque[DataCard]): Rest of datacards
+        """
         self.type_adapter = type_adapter
         assert self.type_adapter.in_trigger_types(trigger.event)
         self.event_type = self.type_adapter.root_type(trigger.event)
@@ -114,6 +241,9 @@ class EventSplitter:
         self.start_split()
 
     def start_split(self):
+        """
+        Start splitting datacards into events
+        """
         while len(self.rest_datacards) > 0:
             datacard = self.rest_datacards.popleft()
             current_event_type = self.type_adapter.root_type(datacard.event)
@@ -135,6 +265,12 @@ class EventSplitter:
             self.builder.add(datacard)
 
     def get_results(self):
+        """
+        Get results of splitting
+
+        Returns:
+            tuple[Event | None, deque[DataCard]]: Event and rest of datacards
+        """
         return self.event, self.rest_datacards
 
     def __parse_unused_event(self):
@@ -146,6 +282,9 @@ class EventSplitter:
             break
 
     def __parse_fatal_failure(self, trigger):
+        """
+        Simulate normal parsing and stop when back to normal
+        """
         self.event_type = self.type_adapter.root_type(trigger.event)
         self.builder = EventBuilder(trigger, self.event_type)
         while len(self.rest_datacards) > 0:
