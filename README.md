@@ -12,7 +12,7 @@ cd data-processor
 ## Usage
 
 ```bash
-python3 main.py
+python3 example.py
 ```
 
 ## License
@@ -24,3 +24,4 @@ python3 main.py
 - Dekun Zhang [@DekunZhang](https://www.github.com/DekunZhang)
 - Hardik Agrawal[@Hardik2239](https://www.github.com/Hardik2239)
 - Yuhang Zhou[@1756413059](https://www.github.com/1756413059)
+- Jucheng Hu[@smgjch](https://www.github.com/smgjch)

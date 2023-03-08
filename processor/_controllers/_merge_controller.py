@@ -1,8 +1,8 @@
 import pandas as pd
 
-from utils import Directory, File
-from apps import Combiner
-from file_getters import MergeFileGetter, SubtypeFileGetter
+from .._utils import Directory, File
+from .._apps import Combiner
+from .._file_getters import MergeFileGetter, SubtypeFileGetter
 
 __all__ = ['merge_controller']
 

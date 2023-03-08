@@ -53,7 +53,7 @@ class Directory:
         )
 
     def find_file(self, file: str):
-        return next((f for f in self.__files if f.get_filename == file), None)
+        return next((f for f in self.__files if f.get_filename() == file), None)
 
     def create_subdirectory(self, directory):
         path = f"{self.__path}/{directory}"

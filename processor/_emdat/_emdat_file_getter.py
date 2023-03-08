@@ -1,12 +1,12 @@
 import pandas as pd
 
-from utils import Directory
+from .._utils import Directory
 
 __all__ = ["EMDATFileGetter"]
 
 
 class EMDATFileGetter:
-    _FOLDER_NAME = "emdat"
+    _FOLDER_NAME = "_emdat"
     _FILE_NAME = "emdat_cleaned.csv"
 
     def __init__(self, data_folder: Directory):
