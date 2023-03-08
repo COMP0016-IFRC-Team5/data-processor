@@ -1,5 +1,6 @@
 from ._utils import Directory
 from ._controllers import slice_controller, merge_controller
+from ._emdat import emdat_controller
 
 __all__ = ['set_data_dir', 'process']
 
@@ -18,3 +19,4 @@ def process():
         raise ValueError('No data directory set.')
     merge_controller.start_merging(_data_dir)
     slice_controller.start_slice(_data_dir)
+    emdat_controller.start_emdat(_data_dir)
