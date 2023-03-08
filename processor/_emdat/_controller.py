@@ -1,8 +1,8 @@
 import pandas as pd
 
-from emdat._emdat_file_getter import EMDATFileGetter
-from emdat._splitter import EMDATSplitter
-from utils import Directory
+from ._emdat_file_getter import EMDATFileGetter
+from ._splitter import EMDATSplitter
+from .._utils import Directory
 
 __all__ = ["emdat_controller"]
 

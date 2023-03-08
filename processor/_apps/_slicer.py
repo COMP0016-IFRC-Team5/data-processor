@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utils import Directory, File
+from .._utils import Directory, File
 
 __all__ = ["Slicer"]
 

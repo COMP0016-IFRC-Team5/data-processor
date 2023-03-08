@@ -1,6 +1,6 @@
-from utils import Directory, File
-from apps import Slicer
-from file_getters import SlicingFileGetter
+from .._utils import Directory, File
+from .._apps import Slicer
+from .._file_getters import SlicingFileGetter
 
 __all__ = ["slice_controller"]
 

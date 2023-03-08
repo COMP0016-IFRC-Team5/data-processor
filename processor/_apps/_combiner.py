@@ -1,7 +1,7 @@
 from collections import deque
 import pandas as pd
 
-from models import DataCard, EventBuilder, Event
+from .._models import DataCard, EventBuilder, Event
 
 __all__ = ["Combiner"]
 
