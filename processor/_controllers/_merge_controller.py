@@ -8,12 +8,24 @@ __all__ = ['merge_controller']
 
 
 class MergeController:
+    """A controller for merging data files from different countries.
+
+    Attributes:
+        __output_folder (Directory | None): The output folder for merged files.
+        __countries (list[Directory] | None): The countries to be merged.
+        __subtypes (dict | None): The subtypes of events to be merged.
+    """
     def __init__(self):
         self.__output_folder: Directory | None = None
         self.__countries: list[Directory] | None = None
         self.__subtypes: dict | None = None
 
     def start_merging(self, data_folder: Directory):
+        """Starts merging the files in the given folder.
+
+        Args:
+            data_folder (Directory): The folder containing the data files.
+        """
         merge_file_getter = MergeFileGetter(data_folder)
         subtype_file_getter = SubtypeFileGetter(data_folder)
         self.__output_folder = merge_file_getter.output_folder
@@ -32,6 +44,12 @@ class MergeController:
         self.__write_results(country, events)
 
     def __write_results(self, country, events):
+        """Writes the merged results to a CSV file.
+
+        Args:
+            country: The name of the country.
+            events: The merged events.
+        """
         filepath = f"{self.__output_folder.get_path()}/{country}"
         contents = list(
             map(
