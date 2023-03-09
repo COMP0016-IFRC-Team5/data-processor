@@ -8,10 +8,10 @@ TRIGGER_EVENTS = ["STORMS", "FLOODS", "EARTHQUAKES"]
 
 
 class Slicer:
-    def __init__(self, country: File, output_folder: Directory, slice=True):
+    def __init__(self, country: File, output_folder: Directory, _slice=True):
         self.__country_name = country.get_filename().split(".")[0]
         self.__country_path = country.get_filepath()
-        self.__slice = slice
+        self.__slice = _slice
         self.__output_folder = output_folder
         self.__start()
 

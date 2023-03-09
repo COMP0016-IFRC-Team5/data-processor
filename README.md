@@ -1,6 +1,6 @@
 # data-processor
 
-A simple data processor for the [DesInventar](www.desinventar.net) and [EM-DAT](https://www.emdat.be/).
+A simple data processor for the [DesInventar](https://www.desinventar.net) and [EM-DAT](https://www.emdat.be/).
 
 ## Installation
 

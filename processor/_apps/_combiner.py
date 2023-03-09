@@ -19,10 +19,10 @@ class Combiner:
             subtypes (dict): Dictionary of event types and subtype files
 
         Attributes:
-            __filtered_datacards (deque[DataCard]): Filtered datacards from file
-                by date and time with invalid datacards removed
-            __events (list[Event]): List of events combined from datacards
-            __type_adapter (EventTypeAdapter): Adapter for event types and
+            self.__filtered_datacards (deque[DataCard]): Filtered datacards from
+                file by date and time with invalid datacards removed
+            self.__events (list[Event]): List of events combined from datacards
+            self.__type_adapter (EventTypeAdapter): Adapter for event types and
                 subtypes from subtype files to check if event is required
         """
         self.__filtered_datacards: deque[DataCard] | None = None
@@ -227,9 +227,9 @@ class EventSplitter:
         Attributes:
             type_adapter (EventTypeAdapter): Adapter for event types and
                 subtypes from subtype files to check if event is required
-            event_type (str): Event type of trigger datacard
-            builder (EventBuilder): Event builder
-            event (Event | None): Event to be returned
+            self.event_type (str): Event type of trigger datacard
+            self.builder (EventBuilder): Event builder
+            self.event (Event | None): Event to be returned
             rest_datacards (deque[DataCard]): Rest of datacards
         """
         self.type_adapter = type_adapter

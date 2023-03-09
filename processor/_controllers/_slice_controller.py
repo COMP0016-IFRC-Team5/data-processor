@@ -11,9 +11,9 @@ class SliceController:
         self.__countries: list[File] | None = None
         self.__slice: bool = True
 
-    def start_slice(self, data_folder: Directory, slice=True):
-        self.__slice = slice
-        file_getter = SlicingFileGetter(data_folder, slice)
+    def start_slice(self, data_folder: Directory, _slice=True):
+        self.__slice = _slice
+        file_getter = SlicingFileGetter(data_folder, _slice)
         self.__sliced_folder = file_getter.sliced_folder
         self.__countries = file_getter.countries
         self.__slice_for_all_countries()
