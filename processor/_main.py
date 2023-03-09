@@ -13,10 +13,13 @@ def set_data_dir(data_dir):
     _data_dir = Directory(data_dir)
 
 
-def process():
+def process(option):
     """Process the data in the data directory."""
     if _data_dir is None:
         raise ValueError('No data directory set.')
-    merge_controller.start_merging(_data_dir)
-    slice_controller.start_slice(_data_dir)
-    emdat_controller.start_emdat(_data_dir)
+    if option['desinventar']['merge']:
+        merge_controller.start_merging(_data_dir)
+    if option['desinventar']['slice']:
+        slice_controller.start_slice(_data_dir)
+    if option['emdat']['process']:
+        emdat_controller.start_emdat(_data_dir)

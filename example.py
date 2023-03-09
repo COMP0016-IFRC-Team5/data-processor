@@ -1,4 +1,15 @@
 import processor
 
 processor.set_data_dir('data')
-processor.process()
+
+option = {
+    'desinventar': {
+        'merge': True,
+        'slice': True,
+    },
+    'emdat': {
+        'process': True,
+    },
+}
+
+processor.process(option)
