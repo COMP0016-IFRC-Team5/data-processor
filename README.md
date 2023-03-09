@@ -11,6 +11,32 @@ cd data-processor
 
 ## Usage
 
+This module provides functionality for processing data from a data directory.
+
+### Classes:
+    None
+
+### Functions:
+    set_data_dir(data_dir)
+        Set the data directory to be used by the processor.
+
+    process(option)
+        Process the data in the data directory.
+
+### Usage:
+To use this module, first call `set_data_dir()` to set the data directory to be
+used by the processor. Then call `process()` with a dictionary `option`
+containing the following keys:
+
+    * 'desinventar': A dictionary containing the following keys:
+        - 'merge': A boolean indicating whether to merge data.
+        - 'slice': A boolean indicating whether to slice data.
+    * 'emdat': A dictionary containing the following key:
+        - 'process': A boolean indicating whether to process EMDAT data.
+
+### Example:
+See `example.py` for detail.
+
 ```bash
 python3 example.py
 ```
