@@ -1,6 +1,7 @@
 # data-processor
 
-A simple data processor for the [DesInventar](https://www.desinventar.net) and [EM-DAT](https://www.emdat.be/).
+A simple data processor for the [DesInventar](https://www.desinventar.net) and 
+[EM-DAT](https://www.emdat.be/).
 
 ## Installation
 
@@ -9,12 +10,25 @@ git clone https://github.com/COMP0016-IFRC-Team5/data-processor.git
 cd data-processor
 ```
 
+## Requirements
+
+1. Install dependencies in any preferred way
+
+- Using conda
+```bash
+conda env create -f conda_env.yml
+conda activate data-processor
+```
+
+- Using pip
+```bash
+pip install -r requirements.txt
+```
+2. Get data using data-downloader module
+
 ## Usage
 
 This module provides functionality for processing data from a data directory.
-
-### Classes:
-    None
 
 ### Functions:
     set_data_dir(data_dir)
