@@ -58,6 +58,20 @@ See `example.py` for detail.
 python3 example.py
 ```
 
+## Customise
+
+### Merge
+When implementing the algorithm for merging the records to events, we referred 
+[THE HYBRID LOSS EXCEEDANCE CURVE](https://www.preventionweb.net/english/hyogo/gar/2011/en/bgdocs/ERN-AL_2011.pdf). 
+In section _4.2.1 Algorithm for grouping events together_. The code related to 
+the implementation is located in `processor/_models/_event_builder.py` and 
+`processor/_apps/_combiner.py`.
+
+### Slice
+The slicing algorithm is `__slice_for_one_event()` in 
+`processor/_apps/_slicer.py`. Currently, we just slice out the first 5% of the 
+events.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
