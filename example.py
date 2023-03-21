@@ -8,7 +8,7 @@ option = {
         'slice': True,
     },
     'emdat': {
-        'process': True,
+        'process': False,
     },
 }
 
