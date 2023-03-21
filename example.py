@@ -1,6 +1,6 @@
 import processor
 
-processor.set_data_dir('./data')
+processor.set_data_dir('../data-visualiser/data')
 
 option = {
     'desinventar': {
