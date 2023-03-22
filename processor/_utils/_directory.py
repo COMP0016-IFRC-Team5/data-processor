@@ -53,7 +53,7 @@ class Directory:
         self.__files: list[File] = []
         self.__directories: list[Directory] = []
         self.__content_names: list[str] = []
-        self.__update()
+        self.update()
 
     def __scan_directory(self):
         with os.scandir(self.__path) as it:
@@ -63,7 +63,7 @@ class Directory:
                 elif entry.is_dir():
                     self.__directories.append(Directory(entry.path))
 
-    def __update(self):
+    def update(self):
         self.__files = []
         self.__directories = []
         self.__scan_directory()
@@ -153,7 +153,7 @@ class Directory:
         if os.path.exists(path):
             return
         os.makedirs(path)
-        self.__update()
+        self.update()
 
     def get_contents(self):
         """Returns a list of the files and subdirectories in the directory."""

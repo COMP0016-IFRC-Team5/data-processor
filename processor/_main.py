@@ -6,7 +6,7 @@ from ._emdat import emdat_controller
 
 __all__ = ['set_data_dir', 'process']
 
-_data_dir = None
+_data_dir: Directory | None = None
 
 
 def set_data_dir(data_dir):
@@ -21,7 +21,9 @@ def process(option):
         raise ValueError('No data directory set.')
     if option['desinventar']['merge']:
         merge_controller.start_merging(_data_dir)
+        _data_dir.update()
     if option['desinventar']['slice']:
         slice_controller.start_slice(_data_dir)
+        _data_dir.update()
     if option['emdat']['process']:
         emdat_controller.start_emdat(_data_dir)
