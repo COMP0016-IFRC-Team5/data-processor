@@ -1,3 +1,5 @@
+import time
+
 from ._utils import Directory
 from ._controllers import slice_controller, merge_controller
 from ._emdat import emdat_controller
@@ -20,6 +22,8 @@ def process(option):
     if option['desinventar']['merge']:
         merge_controller.start_merging(_data_dir)
     if option['desinventar']['slice']:
+        if option['desinventar']['merge']:
+            time.sleep(5)
         slice_controller.start_slice(_data_dir)
     if option['emdat']['process']:
         emdat_controller.start_emdat(_data_dir)
