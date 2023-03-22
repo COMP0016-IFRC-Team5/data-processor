@@ -64,13 +64,16 @@ class Directory:
                     self.__directories.append(Directory(entry.path))
 
     def __update(self):
+        self.__files = []
+        self.__directories = []
         self.__scan_directory()
         self.__files.sort(key=lambda f: f.get_filename())
         self.__directories.sort(key=lambda d: d.get_dirname())
         self.__content_names = list(
             map(lambda c: c.get_dirname() if isinstance(c, Directory)
                 else c.get_filename(),
-                self.get_contents()))
+                self.get_contents())
+        )
 
     def get_directories(self):
         """
